@@ -55,60 +55,116 @@ export default function CustomizedAccordions() {
       setExpanded(newExpanded ? panel : false);
     };
 
+  const createDataCoords = (lat: number, lng: number, alt: number) => {
+    return { lat, lng, alt };
+  };
+
+  const createDataDistances = (twoDim: number, threeDim: number) => {
+    return { "2D (m)": twoDim, "3D (m)": threeDim };
+  };
+
+  const rowsCoords = [
+    createDataCoords(1.0, 24, 4.0),
+    createDataCoords(2.0, 37, 4.3),
+    createDataCoords(3.0, 24, 6.0),
+    createDataCoords(4.7, 67, 4.3),
+    createDataCoords(5.0, 49, 3.9),
+    createDataCoords(6.0, 24, 4.0),
+    createDataCoords(7.0, 37, 4.3),
+    createDataCoords(8.0, 24, 6.0),
+    createDataCoords(9.7, 67, 4.3),
+    createDataCoords(10.0, 49, 3.9),
+    createDataCoords(11.0, 24, 4.0),
+    createDataCoords(12.0, 37, 4.3),
+    createDataCoords(13.0, 24, 6.0),
+    createDataCoords(14.7, 67, 4.3),
+    createDataCoords(15.0, 49, 3.9),
+    createDataCoords(16.0, 24, 4.0),
+    createDataCoords(17.0, 37, 4.3),
+    createDataCoords(18.0, 24, 6.0),
+    createDataCoords(19.7, 67, 4.3),
+    createDataCoords(20.0, 49, 3.9),
+    createDataCoords(21.0, 24, 4.0),
+    createDataCoords(22.0, 37, 4.3),
+    createDataCoords(23.0, 24, 6.0),
+    createDataCoords(24.7, 67, 4.3),
+    createDataCoords(25.0, 49, 3.9),
+  ];
+
+  const rowsDistances = [
+    createDataDistances(1.0, 24),
+    createDataDistances(2.0, 37),
+    createDataDistances(3.0, 24),
+    createDataDistances(4.7, 67),
+    createDataDistances(5.0, 49),
+    createDataDistances(6.0, 24),
+    createDataDistances(7.0, 37),
+    createDataDistances(8.0, 24),
+    createDataDistances(9.7, 67),
+    createDataDistances(10.0, 49),
+    createDataDistances(11.0, 24),
+    createDataDistances(12.0, 37),
+    createDataDistances(13.0, 24),
+    createDataDistances(14.7, 67),
+    createDataDistances(15.0, 49),
+    createDataDistances(16.0, 24),
+    createDataDistances(17.0, 37),
+    createDataDistances(18.0, 24),
+    createDataDistances(19.7, 67),
+    createDataDistances(20.0, 49),
+    createDataDistances(21.0, 24),
+    createDataDistances(22.0, 37),
+    createDataDistances(23.0, 24),
+    createDataDistances(24.7, 67),
+    createDataDistances(25.0, 49),
+  ];
+
+  const accordionsData = [
+    {
+      summary: "Collapsible Group Item #1",
+      details: <Typography>Lorem ipsum 1.</Typography>,
+    },
+    {
+      summary: "Collapsible Group Item #2",
+      details: <Typography>Lorem ipsum 2.</Typography>,
+    },
+    {
+      summary: "Collapsible Group Item #3",
+      details: (
+        <DenseTable tableHead={["lat", "lng", "alt"]} rows={rowsCoords} />
+      ),
+    },
+    {
+      summary: "Collapsible Group Item #4",
+      details: (
+        <DenseTable tableHead={["2D (m)", "3D (m)"]} rows={rowsDistances} />
+      ),
+    },
+  ];
+
   return (
     <div>
-      <Accordion onChange={handleChange("panel1")}>
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography>Collapsible Group Item #1</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion onChange={handleChange("panel2")}>
-        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-          <Typography>Collapsible Group Item #2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion onChange={handleChange("panel3")}>
-        <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-          <Typography>Collapsible Group Item #3</Typography>
-        </AccordionSummary>
-        <AccordionDetails
-          sx={{
-            maxHeight: limited ? 300 : "auto",
-            overflow: "scroll",
-          }}
+      {accordionsData.map((accordion) => (
+        <Accordion
+          onChange={handleChange(accordion.summary)}
+          key={accordion.summary}
         >
-          <DenseTable />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion onChange={handleChange("panel4")}>
-        <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-          <Typography>Collapsible Group Item #4</Typography>
-        </AccordionSummary>
-        <AccordionDetails
-          sx={{
-            maxHeight: limited ? 300 : "auto",
-            overflow: "scroll",
-          }}
-        >
-          <DenseTable />
-        </AccordionDetails>
-      </Accordion>
+          <AccordionSummary
+            aria-controls={accordion.summary}
+            id={accordion.summary}
+          >
+            <Typography>{accordion.summary}</Typography>
+          </AccordionSummary>
+          <AccordionDetails
+          /* sx={{
+              maxHeight: limited ? 300 : "auto",
+              overflow: "scroll",
+            }} */
+          >
+            {accordion.details}
+          </AccordionDetails>
+        </Accordion>
+      ))}
     </div>
   );
 }
