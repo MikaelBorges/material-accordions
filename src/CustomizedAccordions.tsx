@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, SyntheticEvent } from "react";
 import { styled } from "@mui/material/styles";
 //import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
@@ -45,12 +45,16 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-export default function CustomizedAccordions() {
-  const [expanded, setExpanded] = React.useState<string | false>(false);
-  const [limited, setLimited] = React.useState<boolean>(false);
+export default function CustomizedAccordions({
+  heightScreen,
+}: {
+  heightScreen: number;
+}) {
+  const [expanded, setExpanded] = useState<string | false>(false);
+  const [limited, setLimited] = useState<boolean>(false);
 
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    (panel: string) => (event: SyntheticEvent, newExpanded: boolean) => {
       setLimited(newExpanded && expanded ? true : false);
       setExpanded(newExpanded ? panel : false);
     };
@@ -156,10 +160,11 @@ export default function CustomizedAccordions() {
             <Typography>{accordion.summary}</Typography>
           </AccordionSummary>
           <AccordionDetails
-          /* sx={{
-              maxHeight: limited ? 300 : "auto",
+            sx={{
+              minHeight: heightScreen / 3,
+              maxHeight: limited ? heightScreen / 2 : "auto",
               overflow: "scroll",
-            }} */
+            }}
           >
             {accordion.details}
           </AccordionDetails>

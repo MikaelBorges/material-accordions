@@ -19,7 +19,7 @@ type DenseTableProps = {
   rows: RowType[];
 };
 
-export default function DenseTable({ rows, tableHead }: DenseTableProps) {
+export default function DenseTable({ tableHead, rows }: DenseTableProps) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table">
